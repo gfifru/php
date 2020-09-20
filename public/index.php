@@ -7,30 +7,26 @@ use app\models\Order;
 use app\services\DB;
 
 include dirname(__DIR__) . "/services/Autoload.php";
-
 spl_autoload_register([(new Autoload()), 'load']);
 
-$db = DB::getInstance();
+$controllerName = 'index';
 
-$good = new Good($db);
-$user = new User($db);
+if (!empty(trim($_GET['c']))) {
+    $controllerName = trim($_GET['c']);
+}
 
-//$goodModel = $good->getOne(2);
-//var_dump($goodModel);
-//echo '<br>';
-//echo '<br>';
-//$userModel = $user->getOne(7);
-//var_dump($userModel);
-//echo '<br>';
-//echo '<br>';
-//$users = $user->getAll();
-//var_dump($users);
-//var_dump($db->getConnection());
+$actionName = '';
 
-//$user->name = 'Petya';
-//$user->login = 'Petya777';
-//$user->password = '12345';
+if (!empty(trim($_GET['a']))) {
+    $actionName = trim($_GET['a']);
+}
 
-//$user->delete(23);
+$controllerClass = 'app\\controllers\\' . ucfirst($controllerName) . 'Controller';
 
+if (class_exists($controllerClass)) {
 
+    $controller = new $controllerClass();
+    echo $controller->run($actionName);
+} else {
+    echo '404';
+}

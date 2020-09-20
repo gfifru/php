@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 17, 2020 at 09:50 AM
+-- Generation Time: Sep 20, 2020 at 04:58 AM
 -- Server version: 5.7.26
 -- PHP Version: 7.4.2
 
@@ -21,10 +21,10 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `goods` (
-  `id` int(11) NOT NULL,
-  `name` varchar(200) NOT NULL,
-  `price` varchar(10) NOT NULL,
-  `info` text NOT NULL
+                         `id` int(11) NOT NULL,
+                         `name` varchar(200) NOT NULL,
+                         `price` varchar(10) NOT NULL,
+                         `info` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -45,11 +45,11 @@ INSERT INTO `goods` (`id`, `name`, `price`, `info`) VALUES
 --
 
 CREATE TABLE `images` (
-  `url` varchar(30) NOT NULL,
-  `name` varchar(30) NOT NULL,
-  `size` float NOT NULL,
-  `id` int(50) NOT NULL,
-  `views` int(50) DEFAULT NULL
+                          `url` varchar(30) NOT NULL,
+                          `name` varchar(30) NOT NULL,
+                          `size` float NOT NULL,
+                          `id` int(50) NOT NULL,
+                          `views` int(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -68,10 +68,10 @@ INSERT INTO `images` (`url`, `name`, `size`, `id`, `views`) VALUES
 --
 
 CREATE TABLE `orders` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `items` json NOT NULL,
-  `status` int(1) NOT NULL DEFAULT '0'
+                          `id` int(11) NOT NULL,
+                          `user_id` int(11) NOT NULL,
+                          `items` json NOT NULL,
+                          `status` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -79,10 +79,10 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `user_id`, `items`, `status`) VALUES
-(1, 7, '{\"1\": {\"name\": \"u0422u043eu0432u0430u0440 1\", \"count\": 1, \"price\": \"100\"}, \"2\": {\"name\": \"u0422u043eu0432u0430u0440 2\", \"count\": 3, \"price\": \"100\"}}', 0),
-(2, 7, '{\"1\": {\"name\": \"u0422u043eu0432u0430u0440 1\", \"count\": 1, \"price\": \"100\"}, \"2\": {\"name\": \"u0422u043eu0432u0430u0440 2\", \"count\": 2, \"price\": \"100\"}, \"4\": {\"name\": \"u0422u043eu0432u0430u0440 4\", \"count\": 1, \"price\": \"3000\"}, \"5\": {\"name\": \"u0422u043eu0432u0430u0440 5\", \"count\": 1, \"price\": \"7500\"}}', 0),
-(3, 12, '{\"1\": {\"name\": \"u0422u043eu0432u0430u0440 1\", \"count\": 1, \"price\": \"100\"}, \"3\": {\"name\": \"u0422u043eu0432u0430u0440 3\", \"count\": 1, \"price\": \"200\"}, \"4\": {\"name\": \"u0422u043eu0432u0430u0440 4\", \"count\": 1, \"price\": \"3000\"}}', 0),
-(4, 13, '{\"1\": {\"name\": \"u0422u043eu0432u0430u0440 1\", \"count\": 2, \"price\": \"100\"}, \"3\": {\"name\": \"u0422u043eu0432u0430u0440 3\", \"count\": 2, \"price\": \"200\"}, \"4\": {\"name\": \"u0422u043eu0432u0430u0440 4\", \"count\": 2, \"price\": \"3000\"}, \"5\": {\"name\": \"u0422u043eu0432u0430u0440 5\", \"count\": 2, \"price\": \"7500\"}}', 0);
+(1, 7, '{\"1\": {\"name\": \"Товар 1\", \"count\": 1, \"price\": \"100\"}, \"2\": {\"name\": \"Товар 2\", \"count\": 3, \"price\": \"100\"}}', 0),
+(2, 7, '{\"1\": {\"name\": \"Товар 1\", \"count\": 1, \"price\": \"100\"}, \"2\": {\"name\": \"Товар 2\", \"count\": 2, \"price\": \"100\"}, \"4\": {\"name\": \"Товар 4\", \"count\": 1, \"price\": \"3000\"}, \"5\": {\"name\": \"Товар 5\", \"count\": 1, \"price\": \"7500\"}}', 0),
+(3, 12, '{\"1\": {\"name\": \"Товар 1\", \"count\": 1, \"price\": \"100\"}, \"3\": {\"name\": \"Товар 3\", \"count\": 1, \"price\": \"200\"}, \"4\": {\"name\": \"Товар 4\", \"count\": 1, \"price\": \"3000\"}}', 0),
+(4, 13, '{\"1\": {\"name\": \"Товар 1\", \"count\": 2, \"price\": \"100\"}, \"3\": {\"name\": \"Товар 3\", \"count\": 2, \"price\": \"200\"}, \"4\": {\"name\": \"Товар 4\", \"count\": 2, \"price\": \"3000\"}, \"5\": {\"name\": \"Товар 5\", \"count\": 2, \"price\": \"7500\"}}', 0);
 
 -- --------------------------------------------------------
 
@@ -91,11 +91,11 @@ INSERT INTO `orders` (`id`, `user_id`, `items`, `status`) VALUES
 --
 
 CREATE TABLE `users` (
-  `id` int(10) NOT NULL,
-  `login` varchar(30) NOT NULL,
-  `password` varchar(100) NOT NULL,
-  `name` varchar(30) NOT NULL,
-  `is_admin` int(1) DEFAULT '0'
+                         `id` int(10) NOT NULL,
+                         `login` varchar(30) NOT NULL,
+                         `password` varchar(100) NOT NULL,
+                         `name` varchar(30) NOT NULL,
+                         `is_admin` int(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -113,12 +113,7 @@ INSERT INTO `users` (`id`, `login`, `password`, `name`, `is_admin`) VALUES
 (10, 'kol', '123', 'kolya', 0),
 (11, 'bor', '1122', 'borya', 0),
 (12, 'irka', '$2y$10$IJYIGgNyT8k8ENYH1FOiGe0pFuj4qat/LhVHvpefw9HRvXm/YT1jy', 'ira', 0),
-(13, 'vas', '$2y$10$LGEeNPIc3BxnlrKtVrefHe87iqaUai/JoOmQ9i2VoSA8g12Xhi5ay', 'Вася', 0),
-(24, '123', '123', '123', 0),
-(25, '123', '123', '123', 0),
-(26, '123', '123', '123', 0),
-(27, '123', '123', '123', 0),
-(28, '123', '123', '123', 0);
+(13, 'vas', '$2y$10$LGEeNPIc3BxnlrKtVrefHe87iqaUai/JoOmQ9i2VoSA8g12Xhi5ay', 'Вася', 0);
 
 --
 -- Indexes for dumped tables
@@ -128,25 +123,25 @@ INSERT INTO `users` (`id`, `login`, `password`, `name`, `is_admin`) VALUES
 -- Indexes for table `goods`
 --
 ALTER TABLE `goods`
-  ADD PRIMARY KEY (`id`);
+    ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `images`
 --
 ALTER TABLE `images`
-  ADD PRIMARY KEY (`id`);
+    ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
-  ADD PRIMARY KEY (`id`);
+    ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+    ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -156,22 +151,22 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `goods`
 --
 ALTER TABLE `goods`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+    MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+    MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;

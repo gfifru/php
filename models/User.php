@@ -12,7 +12,7 @@ class User extends Model
     /**
      * @return mixed
      */
-    protected function getTableName():string
+    protected static function getTableName():string
     {
         return 'users';
     }

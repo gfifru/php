@@ -4,6 +4,11 @@ namespace app\models;
 
 use app\services\DB;
 
+/**
+ * Class Model
+ * @package app\models
+ * @property int id
+ */
 abstract class Model
 {
     /**
@@ -11,72 +16,116 @@ abstract class Model
      *
      * @return mixed
      */
-    abstract protected function getTableName():string;
+    abstract protected static function getTableName():string;
 
     /**
      * @return DB
      */
-    protected function getDB()
+    protected static function getDB()
     {
         return DB::getInstance();
     }
 
-    public function getOne($id)
+//    public function getOne($id)
+//    {
+//        $tableName = static::getTableName();
+//        $sql = "SELECT * FROM {$tableName} WHERE id = :id";
+//        $params = [':id' => $id];
+//        return static::getDB()->find($sql, $params);
+//    }
+//
+//    public function getAll()
+//    {
+//        $tableName = static::getTableName();
+//        $sql = "SELECT * FROM {$tableName}";
+//        return static::getDB()->findAll($sql);
+//    }
+
+    public static function getOne($id)
     {
-        $tableName = $this->getTableName();
+        $tableName = static::getTableName();
         $sql = "SELECT * FROM {$tableName} WHERE id = :id";
         $params = [':id' => $id];
-        return $this->getDB()->find($sql, $params);
+        return static::getDB()->getObject($sql, static::class, $params);
     }
 
-    public function getAll()
+    public static function getAll()
     {
-        $tableName = $this->getTableName();
+        $tableName = static::getTableName();
         $sql = "SELECT * FROM {$tableName}";
-        return $this->getDB()->findAll($sql);
+        return static::getDB()->getAllObjects($sql, static::class);
     }
 
     protected function insert()
     {
-        $tableName = $this->getTableName();
-//
-//        foreach ($this as $fieldName => $value) {
-//            var_dump($fieldName, $value);
-//        }
+        $fields = [];
+        $params = [];
 
-        $sql = "INSERT INTO {$tableName} (`login`, `password`, `name`) VALUES ('123', '123', '123')";
-        $this->getDB()->execute($sql);
+        foreach ($this as $fieldName => $value) {
+            if ($fieldName == 'id') {
+                continue;
+            }
+            $fields[] = $fieldName;
+            $params[":{$fieldName}"] = $value;
+        }
+        $sql = sprintf(
+            "INSERT INTO %s (%s) VALUES (%s)",
+            static::getTableName(),
+            implode(',', $fields),
+            implode(',', array_keys($params)),
+
+        );
+
+        static::getDB()->execute($sql, $params);
+
+        $this->id = static::getDB()->getLastId();
 
     }
 
     public function save()
     {
         if (empty($this->id)) {
-            return $this->insert();
+            $this->insert();
+            return;
         }
-        return $this->update();
+        $this->update();
     }
 
     public function update()
     {
-        $this->id = $id;
-        $tableName = $this->getTableName();
-//
-//        foreach ($this as $fieldName => $value) {
-//            var_dump($fieldName, $value);
-//        }
+        $fields = [];
+        $params = [];
 
-        $sql = "UPDATE {$tableName} SET `login` = 'bor2' WHERE {$tableName} . id = :id";
-        $params = [':id' => $id];
-        return $this->getDB()->find($sql, $params);
+        foreach ($this as $fieldName => $value) {
+            if ($fieldName == 'id') {
+                continue;
+            }
+            $fields[] = $fieldName;
+            $params[":{$fieldName}"] = $value;
+        }
+
+        var_dump($fields);
+        echo '<br>';
+        echo '<br>';
+        var_dump($params);
+        echo '<br>';
+        echo '<br>';
+
+        $sql = printf(
+            "UPDATE %s SET %s = %s WHERE . id = %s",
+            static::getTableName(),
+            implode(',', $fields),
+            implode(',', $params),
+            $this->id,
+        );
+        static::getDB()->execute($sql, $params);
     }
 
     public function delete($id)
     {
-        $this->id = $id;
-        $tableName = $this->getTableName();
-        $sql = "DELETE FROM {$tableName} WHERE {$tableName} . id = :id";
+        $tableName = static::getTableName();
+        $sql = "DELETE FROM {$tableName} WHERE id = :id";
         $params = [':id' => $id];
-        return $this->getDB()->find($sql, $params);
+        static::getDB()->execute($sql, $params);
     }
 }
