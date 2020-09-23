@@ -26,21 +26,6 @@ abstract class Model
         return DB::getInstance();
     }
 
-//    public function getOne($id)
-//    {
-//        $tableName = static::getTableName();
-//        $sql = "SELECT * FROM {$tableName} WHERE id = :id";
-//        $params = [':id' => $id];
-//        return static::getDB()->find($sql, $params);
-//    }
-//
-//    public function getAll()
-//    {
-//        $tableName = static::getTableName();
-//        $sql = "SELECT * FROM {$tableName}";
-//        return static::getDB()->findAll($sql);
-//    }
-
     public static function getOne($id)
     {
         $tableName = static::getTableName();
@@ -97,26 +82,17 @@ abstract class Model
         $params = [];
 
         foreach ($this as $fieldName => $value) {
+            $params[":{$fieldName}"] = $value;
             if ($fieldName == 'id') {
                 continue;
             }
-            $fields[] = $fieldName;
-            $params[":{$fieldName}"] = $value;
+            $fields[] = "{$fieldName} = :{$fieldName}";
         }
 
-        var_dump($fields);
-        echo '<br>';
-        echo '<br>';
-        var_dump($params);
-        echo '<br>';
-        echo '<br>';
-
-        $sql = printf(
-            "UPDATE %s SET %s = %s WHERE . id = %s",
+        $sql = sprintf(
+            "UPDATE %s SET %s WHERE id = :id",
             static::getTableName(),
             implode(',', $fields),
-            implode(',', $params),
-            $this->id,
         );
         static::getDB()->execute($sql, $params);
     }

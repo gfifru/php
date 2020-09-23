@@ -14,9 +14,15 @@ $items = json_decode($order->items, true);
     <p>Товары:</p>
 
 <?php foreach ($items as $item) : ?>
+
+    <?php
+    $total = $item['price'] * $item['count'];
+//    var_dump($total);
+    ?>
+
     <div style="border:1px solid black; padding:20px; margin:10px;">
-        Товар: <?= $item['name'] ?><br>
-        Количество: <?= $item['count'] ?><br>
+        <?= $item['name'] ?><br>
+        Кол-во: <?= $item['count'] ?><br>
         Стоимость: <?= $item['price'] * $item['count'] ?> ₽<br>
     </div>
 

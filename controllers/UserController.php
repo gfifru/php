@@ -1,64 +1,98 @@
 <?php
 
 namespace app\controllers;
+
+use app\models\Order;
 use app\models\User;
 
-class UserController
+class UserController extends Controller
 {
-//    protected $action;
-    protected $defaultAction = 'all';
-
-    public function run($action)
-    {
-        $this->action = $action;
-        if (empty($action)) {
-            $action = $this->defaultAction;
-        }
-        $action .= 'Action';
-        if (!method_exists($this, $action)) {
-            return '404';
-        }
-        return $this->$action();
-    }
-
     public function allAction()
     {
         $users = User::getAll();
-        return $this->render( 'userAll', ['users' => $users]);
+        return $this->renderer->render(
+            'userAll',
+            [
+                'users' => $users,
+            ]
+        );
     }
 
     public function oneAction()
     {
         $id = $this->getId();
         $user = User::getOne($id);
-        return $this->render( 'userOne', ['user' => $user]);
 
-    }
-
-    public function render($template, $params = [])
-    {
-        $content = $this->renderTpl($template, $params);
-        return $this->renderTpl(
-            'layouts/main',
+        return $this->renderer->render(
+            'userOne',
             [
-                'content' => $content,
+                'user' => $user,
+                'title' => 'Пользователь ' . $user->name,
             ]
         );
+
     }
 
-    public function renderTpl($template, $params = [])
+    public function insertAction()
     {
-        ob_start();
-        extract($params);
-        include dirname(__DIR__) . '/views/' . $template . '.php';
-        return ob_get_clean();
+        $user = new User();
+        $user->name = 'Grisha';
+        $user->login = 'Gri';
+        $user->password = '1234';
+        $user->save();
+
+        header('location: ?c=user');
     }
 
-    protected function getId()
+    public function addAction()
     {
-        if (empty($_GET['id'])) {
-            return 0;
+        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+            return $this->renderer->render(
+                'userAdd',
+                [
+                    'title' => 'Добавление пользователя',
+                ]
+            );
         }
-        return (int)$_GET['id'];
+
+        $user = new User();
+        $user->name = $_POST['name'];
+        $user->login = $_POST['login'];
+        $user->password = $_POST['password'];
+        $user->save();
+
+        header('location: ?c=user');
+
+        return '';
+    }
+
+    public function updateAction()
+    {
+        $id = $this->getId();
+        $user = User::getOne($id);
+
+        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+            return $this->renderer->render(
+                'userUpdate',
+                [
+                    'user' => $user,
+                    'title' => 'Редактирование пользователя',
+                ]
+            );
+        }
+
+        $user->name = $_POST['name'];
+        $user->login = $_POST['login'];
+        $user->password = $_POST['password'];
+        $user->save();
+
+        header('location: ?c=user&a=one&id=' . $id);
+    }
+
+    public function delAction()
+    {
+        $id = $this->getId();
+        User::delete($id);
+        return header('location: ?c=user');
     }
 }

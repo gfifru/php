@@ -14,9 +14,10 @@
 <body>
 
 <ul>
-    <li><a href="?c=user">Пользователи</a></li>
-    <li><a href="?c=good">Товары</a></li>
-    <li><a href="?c=order">Заказы</a></li>
+    <li><a href="?c=user&a=all">Пользователи</a></li>
+    <li><a href="?c=user&a=add">Добавить пользователя</a></li>
+    <li><a href="?c=good&a=all">Товары</a></li>
+    <li><a href="?c=order&a=all">Заказы</a></li>
 </ul>
 
 <?= $content ?>
