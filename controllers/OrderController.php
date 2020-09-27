@@ -23,6 +23,9 @@ class OrderController extends Controller
         $order = Order::getOne($id);
         $items = json_decode($order->items, true);
         $result = 0;
+        foreach ($items as $item) {
+            $result += $item['count'] * $item['price'];
+        }
         return $this->renderer->render(
             'orderOne',
             [

@@ -12,7 +12,7 @@
             Стоимость: {{ item.count * item.price }} ₽<br>
         </div>
     {% endfor %}
-    <p>{{ result }}</p>
+    <p>Сумма заказа: {{ result }} ₽</p>
     <hr>
     <a href="/order/">Назад</a>
     <a href="/order/del?id={{ order.id }}">Удалить</a>
