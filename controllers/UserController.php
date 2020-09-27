@@ -2,7 +2,6 @@
 
 namespace app\controllers;
 
-use app\models\Order;
 use app\models\User;
 
 class UserController extends Controller
@@ -27,21 +26,9 @@ class UserController extends Controller
             'userOne',
             [
                 'user' => $user,
-                'title' => 'Пользователь ' . $user->name,
             ]
         );
 
-    }
-
-    public function insertAction()
-    {
-        $user = new User();
-        $user->name = 'Grisha';
-        $user->login = 'Gri';
-        $user->password = '1234';
-        $user->save();
-
-        header('location: ?c=user');
     }
 
     public function addAction()
@@ -49,9 +36,6 @@ class UserController extends Controller
         if ($_SERVER['REQUEST_METHOD'] != 'POST') {
             return $this->renderer->render(
                 'userAdd',
-                [
-                    'title' => 'Добавление пользователя',
-                ]
             );
         }
 
@@ -61,7 +45,7 @@ class UserController extends Controller
         $user->password = $_POST['password'];
         $user->save();
 
-        header('location: ?c=user');
+        header('location: /user/');
 
         return '';
     }
@@ -76,7 +60,6 @@ class UserController extends Controller
                 'userUpdate',
                 [
                     'user' => $user,
-                    'title' => 'Редактирование пользователя',
                 ]
             );
         }
@@ -86,13 +69,13 @@ class UserController extends Controller
         $user->password = $_POST['password'];
         $user->save();
 
-        header('location: ?c=user&a=one&id=' . $id);
+        header('location: /user/one?id=' . $id);
     }
 
     public function delAction()
     {
         $id = $this->getId();
         User::delete($id);
-        return header('location: ?c=user');
+        return header('location: /user/');
     }
 }

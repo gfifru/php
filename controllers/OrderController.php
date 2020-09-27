@@ -9,14 +9,28 @@ class OrderController extends Controller
     public function allAction()
     {
         $orders = Order::getAll();
-        return $this->renderer->render( 'orderAll', ['orders' => $orders]);
+        return $this->renderer->render(
+            'orderAll',
+            [
+                'orders' => $orders
+            ]
+        );
     }
 
     public function oneAction()
     {
         $id = $this->getId();
         $order = Order::getOne($id);
-        return $this->renderer->render( 'orderOne', ['order' => $order]);
+        $items = json_decode($order->items, true);
+        $result = 0;
+        return $this->renderer->render(
+            'orderOne',
+            [
+                'order' => $order,
+                'items' => $items,
+                'result' => $result,
+            ]
+        );
 
     }
 
@@ -24,6 +38,6 @@ class OrderController extends Controller
     {
         $id = $this->getId();
         Order::delete($id);
-        return header('location: ?c=order');
+        return header('location: /order/');
     }
 }

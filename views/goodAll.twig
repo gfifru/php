@@ -1,0 +1,24 @@
+{% extends 'layouts/main.twig' %}
+
+{% block title %}Товары{% endblock %}
+
+{% block content %}
+    <h1>Товары</h1>
+
+    <div style="display: flex; flex-wrap: wrap;">
+
+        {% for good in goods %}
+
+        <div style="padding: 10px; margin: 10px; border: 1px solid #ececec; text-align: center;">
+            <h3>{{ good.name }}</h3>
+            <p><img style="width:100px;" src="/img/{{ good.image }}" alt="{{ good.name }}"></p>
+            <p>Цена: {{ good.price }} ₽</p>
+            <p>Инфо: {{ good.info }}</p>
+            <hr>
+            <a href="/good/one?id={{ good.id }}">Подробнее</a>
+        </div>
+
+        {% endfor %}
+
+    </div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'layouts/main.twig' %}
+
+{% block title %}{{ good.name }}{% endblock %}
+
+{% block content %}
+    <h1>{{ good.name }}</h1>
+
+    <div style="padding: 10px; margin: 10px; border: 1px solid #ececec; width: 300px;">
+        <p><img style="width:100%;" src="/img/{{ good.image }}" alt="{{ good.name }}"></p>
+        <p>Цена: {{ good.price }} ₽</p>
+        <p>Инфо: {{ good.info }}</p>
+        <hr>
+        <a href="/good/">Назад</a>
+    </div>
+{% endblock %}

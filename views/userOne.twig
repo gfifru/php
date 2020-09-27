@@ -1,0 +1,17 @@
+{% extends 'layouts/main.twig' %}
+
+{% block title %}Пользователь {{ user.name }}{% endblock %}
+
+{% block content %}
+<h1>Пользователь {{ user.name }}</h1>
+
+<div style="padding: 10px; margin: 10px; border: 1px solid #ececec;">
+    <h1>{{ user.login }}</h1>
+    <p>Имя: <strong>{{ user.name }}</strong></p>
+    <p>Логин: <strong>{{ user.login }}</strong></p>
+    <hr>
+    <a href="/user/">Назад</a>
+    <a href="/user/del?id={{ user.id }}">Удалить</a>
+    <a href="/user/update?id={{ user.id }}">Редактировать</a>
+</div>
+{% endblock %}

@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\services\RenderInt;
 use app\services\RenderServices;
+use app\services\Request;
 
 abstract class Controller
 {
@@ -15,11 +16,17 @@ abstract class Controller
     protected $renderer;
 
     /**
+     * @var Request
+     */
+    protected $request;
+
+    /**
      * Controller constructor.
      * @param $renderer
      */
-    public function __construct(RenderInt $renderer){
+    public function __construct(RenderInt $renderer, Request $request){
         $this->renderer = $renderer;
+        $this->request = $request;
     }
 
     public function run($action)
@@ -37,9 +44,6 @@ abstract class Controller
 
     protected function getId()
     {
-        if (empty($_GET['id'])) {
-            return 0;
-        }
-        return (int)$_GET['id'];
+        return $this->request->getId();
     }
 }
