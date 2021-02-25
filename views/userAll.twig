@@ -1,0 +1,20 @@
+{% extends 'layouts/main.twig' %}
+
+{% block title %}Пользователи{% endblock %}
+
+{% block content %}
+<h1>Пользователи</h1>
+
+<div style="display: flex; flex-wrap: wrap;">
+{% for user in users %}
+    <div style="padding: 10px; margin: 1%; border: 1px solid #ececec; flex-grow: 1; width: calc(94% / 3); box-sizing: border-box;">
+        <h3>{{ user.login }}</h3>
+        <p>{{ user.name }}</p>
+        <hr>
+        <a href="/user/one?id={{ user.id }}">Подробнее</a>
+    </div>
+{% else %}
+    <p>Пользователей нет</p>
+{% endfor %}
+</div>
+{% endblock %}

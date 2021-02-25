@@ -1,0 +1,14 @@
+{% extends 'layouts/main.twig' %}
+
+{% block title %}Добавление товара{% endblock %}
+
+{% block content %}
+    <h1>Добавление товара</h1>
+    <form enctype="multipart/form-data" method="post">
+        <input type="text" name="name" placeholder="Имя" required><br><br>
+        <input type="text" name="price" placeholder="Цена" required><br><br>
+        <textarea type="text" name="info" placeholder="Описание" required></textarea><br><br>
+        <input name="userfile" type="file"><br><br>
+        <input type="submit" value="Добавить">
+    </form>
+{% endblock %}

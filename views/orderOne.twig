@@ -1,0 +1,19 @@
+{% extends 'layouts/main.twig' %}
+
+{% block title %}Заказ № {{ order.id }}{% endblock %}
+
+{% block content %}
+    <h1>Заказ № {{ order.id }}</h1>
+    <p>Товары:</p>
+    {% for item in items %}
+        <div style="border:1px solid black; padding:20px; margin:10px;">
+            {{ item.name }}<br>
+            Кол-во: {{ item.count }}<br>
+            Стоимость: {{ item.count * item.price }} ₽<br>
+        </div>
+    {% endfor %}
+    <p>Сумма заказа: {{ result }} ₽</p>
+    <hr>
+    <a href="/order/">Назад</a>
+    <a href="/order/del?id={{ order.id }}">Удалить</a>
+{% endblock %}
